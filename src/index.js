@@ -1,5 +1,7 @@
 import Notiflix from 'notiflix';
 import { fetchImages } from './js/api';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('#gallery');
 const form = document.querySelector('#search-form');
@@ -27,6 +29,7 @@ const loadGallery = () => {
     })
     .then(() => {
       loadMoreButton.style.display = 'inline-flex';
+      new SimpleLightbox('#gallery .photo-card', {sourceAttr: 'data-image', overlayOpacity: 0.9});
     })
     .catch(error => {
         Notiflix.Notify.failure(error.message);
@@ -54,7 +57,7 @@ function displayImages(images) {
 }
 
 function createPhotoCard(image) {
-    return `<div class="photo-card">
+  return `<div class="photo-card" data-image="${image.largeImageURL}">
     <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
     <div class="info">
       <p class="info-item">
@@ -76,3 +79,4 @@ function createPhotoCard(image) {
     </div>
   </div>`;
 }
+
