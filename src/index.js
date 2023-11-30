@@ -22,14 +22,14 @@ const loadGallery = () => {
 
       displayImages(data.hits);
 
-      if (pageNumber === Math.floor(data.totalHits / 40)) {
+      if (pageNumber === Math.floor(data.totalHits / 40) || data.hits.length < 40) {
         loadMoreButton.style.display = 'none';
         throw new Error(`We're sorry, but you've reached the end of search results.`);
       }
     })
     .then(() => {
       loadMoreButton.style.display = 'inline-flex';
-      new SimpleLightbox('#gallery .photo-card', {sourceAttr: 'data-image', overlayOpacity: 0.9   });
+      new SimpleLightbox('#gallery .photo-card', {sourceAttr: 'data-image', overlayOpacity: 0.9});
     })
     .catch(error => {
         Notiflix.Notify.failure(error.message);
